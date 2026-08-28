@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+
+@source '../../resources/js/**/*.tsx';
+
+/* The receptionist page is a full-bleed video surface; no page scroll anywhere. */
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}

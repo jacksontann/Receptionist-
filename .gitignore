@@ -1,0 +1,26 @@
+# --- web (Laravel) ---
+web/vendor/
+web/node_modules/
+web/public/build/
+web/public/hot
+web/storage/*.key
+web/storage/framework/cache/data/*
+web/storage/framework/sessions/*
+web/storage/framework/views/*
+web/storage/logs/*
+web/.env
+web/.env.backup
+web/.phpunit.result.cache
+web/database/*.sqlite
+
+# --- agent (Python) ---
+agent/venv/
+agent/.venv/
+agent/__pycache__/
+agent/.env.local
+
+# --- editors / OS ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
