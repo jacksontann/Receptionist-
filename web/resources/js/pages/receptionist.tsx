@@ -2,7 +2,7 @@ import { Head, usePage } from '@inertiajs/react';
 import { ControlBar, LiveKitRoom, RoomAudioRenderer } from '@livekit/components-react';
 import '@livekit/components-styles';
 import { Room } from 'livekit-client';
-import { Mic, MicOff, Video } from 'lucide-react';
+import { Mic, MicOff, PhoneOff, Video } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import ReceptionistRoom from './room/receptionist-room';
 
@@ -35,6 +35,12 @@ export default function Receptionist() {
     setSessionEnded(true);
   }, []);
 
+  // Same path as the 20-minute cap: disconnecting fires the room's `disconnected`
+  // event, which ReceptionistRoom forwards to handleDisconnect.
+  const endSession = useCallback(() => {
+    room.disconnect();
+  }, [room]);
+
   const restart = () => {
     // A fresh session needs a fresh room and token, so reload rather than
     // reconnecting with the spent one.
@@ -57,11 +63,20 @@ export default function Receptionist() {
             <ReceptionistRoom onDisconnect={handleDisconnect} />
 
             <RoomAudioRenderer />
-            <div className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2">
+            <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3">
               <ControlBar
                 controls={{ screenShare: false, camera: false, leave: false }}
                 data-lk-theme="default"
               />
+              <button
+                type="button"
+                onClick={endSession}
+                title="End session"
+                className="flex items-center gap-2 rounded-full bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red-700"
+              >
+                <PhoneOff className="h-4 w-4" />
+                End session
+              </button>
             </div>
           </LiveKitRoom>
         </div>

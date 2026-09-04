@@ -54,11 +54,16 @@ Two processes, in separate terminals:
 
 ```bash
 cd agent && venv/Scripts/activate && python receptionist.py dev
-cd web   && php artisan serve --port=8001
+cd web   && php artisan serve
 ```
 
-Then open <http://127.0.0.1:8001>. For frontend hot-reload, run `npm run dev` instead of
+Then open <http://127.0.0.1:8000>. For frontend hot-reload, run `npm run dev` instead of
 `npm run build`.
+
+`npm run dev` serves assets on port **5173**, not 8001. The `APP_URL: http://127.0.0.1:8001`
+line Vite prints on startup is just echoing `APP_URL` from `web/.env` — it is a label, not a
+port Vite listens on. Keep `APP_URL` matching whatever port `php artisan serve` uses (8000 by
+default), or Laravel will generate links to a port nothing is running on.
 
 There is no login — opening the page starts a session immediately.
 
